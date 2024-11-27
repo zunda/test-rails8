@@ -1,6 +1,6 @@
 import consumer from "channels/consumer"
 
-consumer.subscriptions.create("ChatChannel", {
+const chatChannel = consumer.subscriptions.create("ChatChannel", {
   connected() {
     // Called when the subscription is ready for use on the server
   },
@@ -13,7 +13,17 @@ consumer.subscriptions.create("ChatChannel", {
     // Called when there's incoming data on the websocket for this channel
   },
 
-  speak: function() {
-    return this.perform('speak');
+  speak: function(message) {
+    return this.perform('speak', {message: message});
   }
 });
+
+document.getElementById("input-message").addEventListener('keypress', (e) =>
+  {
+    if (e.keyCode == 13) {
+      chatChannel.speak(e.target.value);
+      e.target.value = "";
+      e.preventDefault();
+    }
+  }
+)
