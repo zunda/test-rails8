@@ -1,24 +1,38 @@
-# README
+# Test Rails 8
+A minimal app for me to test features on Rails 8. To deploy as a Heroku app:
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+```
+heroku create
+heroku addons:create heroku-postgresql
+heroku pg:wait
+git push heroku main
+heroku open
+```
 
-Things you may want to cover:
+As of 2024-12-04, deploy to Fir doesn't complete waiting for release dyno to complete. The `git` command can be terminated with a Ctrl-C with running `watch heroku ps` on another terminal and waiting for the `release` dyno to run and terminate.
 
-* Ruby version
+## Features
+### Rails cache
+Solid Cache is configured to store cache on the file system. The cached time shown on the home page might be inconsistent among web dynos.
 
-* System dependencies
+```ruby
+# cconfig/environments/production.rb
+config.cache_store = :file_store, "#{root}/tmp/cache/"
+```
 
-* Configuration
+### Action Cable
+Solid Cable is configured to use the database to manage subscriptions and messages.
 
-* Database creation
+The chat messages are sent to browsers that simultaneously have the same page open but are never stored.
 
-* Database initialization
+## License
+Copyright 2024 zunda <zunda at gmail.com>
 
-* How to run the test suite
+MIT License
 
-* Services (job queues, cache servers, search engines, etc.)
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-* Deployment instructions
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-* ...
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
