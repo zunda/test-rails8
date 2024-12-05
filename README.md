@@ -9,8 +9,6 @@ git push heroku main
 heroku open
 ```
 
-As of 2024-12-04, deploy to Fir doesn't complete waiting for release dyno to complete. The `git` command can be terminated with a Ctrl-C with running `watch heroku ps` on another terminal and waiting for the `release` dyno to run and terminate.
-
 ## Features
 ### Rails cache
 Solid Cache is configured to store cache on the file system. The cached time shown on the home page might be inconsistent among web dynos.
