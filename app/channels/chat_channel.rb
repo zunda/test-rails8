@@ -8,7 +8,7 @@ class ChatChannel < ApplicationCable::Channel
   end
 
   def speak(data)
-    data['time_ms'] = Time.now.to_f * 1000
+    data["time_ms"] = Time.now.to_f * 1000
     ActionCable.server.broadcast("speak", data)
   end
 end
