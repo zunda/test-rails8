@@ -1,7 +1,7 @@
 namespace :source do
-  desc 'Record source version'
+  desc "Record source version"
   task :version do
-    hash = ENV['SOURCE_VERSION']  # available on Heroku while build
+    hash = ENV["SOURCE_VERSION"]  # available on Heroku while build
     if hash.blank?
       begin
         hash = `git rev-parse HEAD 2>/dev/null`.strip
@@ -11,7 +11,7 @@ namespace :source do
     end
     unless hash.blank?
       hash_abb = hash[0..7]
-      File.open('config/initializers/version.rb', 'w') do |f|
+      File.open("config/initializers/version.rb", "w") do |f|
         f.write <<~_TEMPLATE
           module TestRails8
             module Version
@@ -32,4 +32,4 @@ namespace :source do
   end
 end
 
-task 'assets:precompile' => ['source:version']
+task "assets:precompile" => [ "source:version" ]
